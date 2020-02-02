@@ -25,60 +25,60 @@ import javafx.scene.control.TextField;
 public class CSVFilterController {
 
 	private CSVfilter csVfilter;
-	private static File csvStarterFile;
-//	private Main m;
-	private static List<String> textFields = new ArrayList<>();
+	private File csvStarterFile;
 	public static int numFields;
 
 	@FXML
-	protected TextField textfield1;
+	protected TextField textfieldInput;
 
 	@FXML
-	protected TextField textfield2;
+	protected TextField textfieldOutput;
 
 	@FXML
-	protected TextField textfield3;
+	protected void handleChooseSaveFolder(ActionEvent event) {
+		
+		FileChooser fChooser = new FileChooser();
+		fChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fChooser.setTitle("Please choose a location to save your completed Excel file");
+		fChooser.setInitialFileName("Excel-File.xlsx");
+		File toWrite = fChooser.showSaveDialog(new Stage());
+		
+		if (toWrite != null) {
+			textfieldOutput.setText(toWrite.getAbsolutePath());
+			csVfilter.setOutputFile(toWrite);
+		}
+
+	}
 
 	@FXML
-	protected TextField textfield4;
+	protected void handlePickSourceFile(ActionEvent event) {
 
-	@FXML
-	protected TextField textfield5;
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Select the CSV file you want to work with");
+		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".csv", "*.csv"));
+		csvStarterFile = chooser.showOpenDialog(new Stage(StageStyle.UTILITY));
 
-	@FXML
-	public void handleSubmitCSVfilter(ActionEvent event) {
-
-		if (textfield1.getText().isEmpty()) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Something went wrong");
-			alert.setContentText("The only field you cannot leave blank is header one.");
-			alert.show();
+		if (csvStarterFile != null) {
+			textfieldInput.setText(csvStarterFile.getAbsolutePath());
+			csVfilter.setUserFile(csvStarterFile);
 
 		} else {
-			if (!textfield1.getText().isEmpty()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Something went wrong");
+			alert.setContentText("Could not load the csv filepath");
+			alert.show();
 
-				textFields.add(textfield1.getText());
-			}
-			if (!textfield2.getText().isEmpty()) {
-				textFields.add(textfield2.getText());
-			}
-			if (!textfield3.getText().isEmpty()) {
-				textFields.add(textfield3.getText());
-			}
-			if (!textfield4.getText().isEmpty()) {
-				textFields.add(textfield4.getText());
-			}
-			if (!textfield5.getText().isEmpty()) {
-				textFields.add(textfield5.getText());
-			}
+		}
+	}
 
-			try {
+	@FXML
+	protected void handleSubmitAndRun(ActionEvent event) {
 
-				csVfilter.extractToXLSX(textFields);
+		try {
+			csVfilter.extractToXLSX();
 
-			} catch (Exception e) {
-				System.out.print("line 73" + e.getMessage());
-			}
+		} catch (Exception e) {
+//			System.out.print("line 73" + e.getMessage());
 		}
 	}
 
@@ -87,18 +87,8 @@ public class CSVFilterController {
 	}
 
 	public void start() throws Exception {
-
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Select the CSV file you want to work with");
-		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".csv", "*.csv"));
-		csvStarterFile = chooser.showOpenDialog(new Stage(StageStyle.UTILITY));
-
-		if (csvStarterFile != null) {
-
-			CSVfilter csvfilter = new CSVfilter(csvStarterFile);
-			this.csVfilter = csvfilter;
-
-		}
+		CSVfilter csvfilter = new CSVfilter();
+		this.csVfilter = csvfilter;
 
 	}
 

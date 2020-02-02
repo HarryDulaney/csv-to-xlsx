@@ -14,7 +14,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("/view/CSVfilterWiz.fxml"));
+		loader.setLocation(Main.class.getResource("/application/CSVfilterWiz.fxml"));
 	
 		try {
 			AnchorPane root = (AnchorPane) loader.load();

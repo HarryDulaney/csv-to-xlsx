@@ -14,7 +14,10 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import com.opencsv.CSVReader;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,22 +31,13 @@ public class CSVfilter {
 	/** The csv file path. */
 	private File csvFilePath;
 
+	private File outFile;
+
 	/**
 	 * Instantiates a new CSvfilter.
 	 */
 	public CSVfilter() {
 		super();
-
-	}
-
-	/**
-	 * Instantiates a new CSvfilter.
-	 *
-	 * @param file the file
-	 */
-	public CSVfilter(File file) {
-
-		this.csvFilePath = file;
 
 	}
 
@@ -54,23 +48,7 @@ public class CSVfilter {
 	 * @throws IOException            Signals that an I/O exception has occurred.
 	 * @throws InvalidFormatException the invalid format exception
 	 */
-	public void extractToXLSX(List<String> headers) throws IOException, InvalidFormatException {
-
-		TextInputDialog inDialog = new TextInputDialog();
-		inDialog.setHeaderText("Information Requested");
-		inDialog.setContentText(
-				"Input a name for your new spreadsheet. " + "Don't forget to select a .csv or .xlsx output format");
-		inDialog.setHeight(150);
-		inDialog.setWidth(235);
-		inDialog.showAndWait();
-
-		if (inDialog.getResult().isEmpty()) {
-			inDialog.setContentText("Sheet name can not be blank. Please input a name for your spreadsheet.");
-			inDialog.showAndWait();
-
-		}
-
-		String sheetName = inDialog.getResult();
+	public void extractToXLSX() throws IOException, InvalidFormatException {
 
 		Workbook workBook = null;
 		CSVReader reader;
@@ -82,10 +60,9 @@ public class CSVfilter {
 			reader = new CSVReader(new FileReader(csvFilePath));
 
 			workBook = new SXSSFWorkbook();
-			sheet = (SXSSFSheet) workBook.createSheet(sheetName);
+			sheet = (SXSSFSheet) workBook.createSheet("NewSheet1");
 
 			int rowNumber = 0;
-			System.out.print("Creating New .Xls File From The Already Generated .Csv File");
 			while ((lineVals = reader.readNext()) != null) {
 				Row currentRow = sheet.createRow(rowNumber++);
 				for (int i = 0; i < lineVals.length; i++) {
@@ -96,16 +73,17 @@ public class CSVfilter {
 			e.printStackTrace();
 		}
 
-		FileChooser fChooser = new FileChooser();
-		fChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		fChooser.setTitle("Please choose a location to save your completed Excel file");
-		fChooser.setInitialFileName("Excel-File.xlsx");
-		File toWrite = fChooser.showSaveDialog(new Stage());
+		if (outFile != null) {
 
-		if (toWrite != null) {
-
-			try (FileOutputStream fOs = new FileOutputStream(new File(toWrite.getAbsolutePath()))) {
+			try (FileOutputStream fOs = new FileOutputStream(new File(outFile.getAbsolutePath()))) {
 				workBook.write(fOs);
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("Success! Your file has been converted to .xlsx Excel format");
+				alert.showAndWait();
+				
+				Platform.exit();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -120,9 +98,15 @@ public class CSVfilter {
 	 *
 	 * @return the file
 	 */
-	public File setUserFile() {
+	public void setUserFile(File csvFilePath) {
 
-		return csvFilePath;
+		this.csvFilePath = csvFilePath;
+
+	}
+
+	public void setOutputFile(File outFile) {
+
+		this.outFile = outFile;
 
 	}
 
