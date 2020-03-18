@@ -79,7 +79,7 @@ public class CSVfilter {
 				workBook.write(fOs);
 				
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setContentText("Success! Your file has been converted to .xlsx Excel format");
+				alert.setContentText("Success! Your .csv file has been converted to .xlsx Excel format");
 				alert.showAndWait();
 				
 				Platform.exit();

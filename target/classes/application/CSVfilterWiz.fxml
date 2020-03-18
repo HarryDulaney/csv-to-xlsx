@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CSVFilterController">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <FlowPane>
+               <children>
+                  <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="500.0" text="CSV to XLSX " textAlignment="RIGHT">
+                     <font>
+                        <Font name="Onyx" size="90.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="500.0" text="By HGDIV" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Onyx" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+         </top>
+         <center>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab>
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane layoutX="5.0" layoutY="4.0" prefHeight="378.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="359.3333740234375" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <HBox prefHeight="62.0" prefWidth="293.0" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <children>
+                                          <Button alignment="TOP_CENTER" cancelButton="true" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#handlePickSourceFile" prefHeight="47.0" prefWidth="461.0" text="Pick a file" textAlignment="CENTER" HBox.hgrow="SOMETIMES">
+                                             <font>
+                                                <Font name="Onyx" size="25.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="OPEN_HAND" />
+                                             </cursor>
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <children>
+                                          <TextField fx:id="textfieldOutput" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="28.0" prefWidth="457.0" promptText="File path to save the new .XLSX file" HBox.hgrow="SOMETIMES">
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="OCR A Extended" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <children>
+                                          <Button alignment="TOP_CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#handleChooseSaveFolder" prefHeight="47.0" prefWidth="463.0" text="Pick a save location" textAlignment="CENTER" HBox.hgrow="SOMETIMES">
+                                             <font>
+                                                <Font name="Onyx" size="25.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="OPEN_HAND" />
+                                             </cursor>
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_LEFT">
+                                       <children>
+                                          <TextFlow />
+                                          <TextField fx:id="textfieldInput" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="33.0" prefWidth="460.0" promptText="Path to .CSV file here" HBox.hgrow="SOMETIMES">
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="OCR A Extended" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="319.0" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <children>
+                                          <Button alignment="TOP_CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitAndRun" prefHeight="47.0" prefWidth="178.0" text="CONVERT" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Onyx" size="25.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="OPEN_HAND" />
+                                             </cursor>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
